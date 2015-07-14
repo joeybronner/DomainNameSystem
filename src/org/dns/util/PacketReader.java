@@ -9,7 +9,6 @@ import java.io.IOException;
  * Need to come up with a better implementation for it.
  */
 
-
 public class PacketReader {
 	
 	private static PacketReader reader;
@@ -47,7 +46,7 @@ public class PacketReader {
 		return name.toString();
 	}
 	
-	private String readNameFromOffset(int offset) throws IOException{
+	/*private String readNameFromOffset(int offset) throws IOException{
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data, offset, 255));
 		StringBuilder name = new StringBuilder();
 		int length = dis.readByte();
@@ -64,6 +63,6 @@ public class PacketReader {
 			}
 		}
 		return name.toString();
-	}
+	}*/
 
 }

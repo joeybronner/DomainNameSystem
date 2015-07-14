@@ -24,6 +24,7 @@ public class Question implements IQuestion {
 	public Question(String qname, IRecordType qtype, IRecordClass qclass){
         this.setQName (qname);
         this.setQType (qtype);
+        System.out.println("qclass: " + qclass);
         this.setQClass (qclass);
     }
     
@@ -143,6 +144,7 @@ public class Question implements IQuestion {
         this.setQType (new RecordType (dis.readUnsignedShort ()));
         
         //set QCLASS
+        //System.out.println("disqclass: " + dis.readUnsignedShort ());
         this.setQClass (new RecordClass (dis.readUnsignedShort ()));
     }
 

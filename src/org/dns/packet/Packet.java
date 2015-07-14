@@ -23,14 +23,14 @@ public class Packet implements IPacket {
     private IAuthority AUTHORITY;
     private IAdditional ADDITIONAL;
     
-	public Packet(IHeader header, IQuestion question, IAnswer answer,
-			IAuthority authority, IAdditional additional) {
+	public Packet(IHeader header, IQuestion question/*, IAnswer answer,
+			IAuthority authority, IAdditional addition*/) {
 		
 		this.setHeader(header);
 		this.setQuestion(question);
-		this.setAnswer(answer);
+		/*this.setAnswer(answer);
 		this.setAuthority(authority);
-		this.setAdditional(additional);
+		this.setAdditional(additional);*/
 		
 	}
 		

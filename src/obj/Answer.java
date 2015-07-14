@@ -1,7 +1,4 @@
-package org.dns.packet.section;
-
-import org.dns.packet.abstraction.IAnswer;
-import org.dns.packet.abstraction.record.IRecord;
+package obj;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,11 +6,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.dns.packet.section.record.Record;
-
-public class Answer implements IAnswer {
+public class Answer {
     
-    private Record [] records; //resource records
+    private Record [] records;
     
     public Answer(int ancount, DataInputStream dis) throws IOException{
         readFromInputStream (ancount, dis);
@@ -25,15 +20,10 @@ public class Answer implements IAnswer {
         readFromInputStream (ancount, dis);
     }
     
-    public Answer(Record [] records){
+    public Answer(Record [] records) {
     	this.setRecords(records);
     }
-    
-    
-    /* (non-Javadoc)
-     * @see org.dns.interfaces.IAnswer#readFromInputStream(int, java.io.DataInputStream)
-     */
-    @Override
+        
     public void readFromInputStream(int ancount, DataInputStream dis) throws IOException{
         Record [] recs = new Record [ancount];
         for(int i = 0; i < ancount; i++){
@@ -42,10 +32,6 @@ public class Answer implements IAnswer {
         this.setRecords(recs);
     }
 
-    /* (non-Javadoc)
-     * @see org.dns.interfaces.IAnswer#writeToOutputStream(java.io.DataOutputStream)
-     */
-    @Override
     public void writeToOutputStream (DataOutputStream dos) throws IOException {
     	Record [] recs = (Record[]) this.getRecords();
         for(int i = 0; i < recs.length; i++){
@@ -53,10 +39,6 @@ public class Answer implements IAnswer {
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.dns.interfaces.IAnswer#toByteArray()
-     */
-    @Override
     public byte[] toByteArray () throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream ();
         DataOutputStream dos = new DataOutputStream (bos);
@@ -65,9 +47,6 @@ public class Answer implements IAnswer {
         return bos.toByteArray ();
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     public String toString(){
     	Record [] recs = (Record[]) this.getRecords();
         StringBuilder sb = new StringBuilder ();
@@ -79,19 +58,11 @@ public class Answer implements IAnswer {
         return sb.toString ();
     }
 
-	/* (non-Javadoc)
-	 * @see org.dns.interfaces.org.dns.packet.IAnswer#setRecords(org.dns.interfaces.org.dns.packet.section.record.IRecord[])
-	 */
-	@Override
-	public void setRecords(IRecord[] records) {
-		this.records = (Record[]) records;
+	public void setRecords(Record[] records2) {
+		this.records = (Record[]) records2;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.dns.interfaces.org.dns.packet.IAnswer#getRecords()
-	 */
-	@Override
-	public IRecord[] getRecords() {
+	public Record[] getRecords() {
 		return this.records;
 	}
 }

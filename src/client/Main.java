@@ -1,4 +1,5 @@
-package org.dns;
+package client;
+
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -6,16 +7,14 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Random;
-import java.util.Scanner;
 
-import org.dns.instance.DNSClient;
-import org.dns.packet.Packet;
-import org.dns.packet.section.Header;
-import org.dns.packet.section.Question;
-import org.dns.packet.section.record.RecordClass;
-import org.dns.packet.section.record.RecordType;
-
+import obj.Header;
+import obj.Packet;
+import obj.Question;
+import utils.UsersInteractions;
 import utils.Utils;
+import utils.enums.QClass;
+import utils.enums.QType;
 
 public class Main {
 
@@ -25,6 +24,8 @@ public class Main {
 	static String HOTE = null;
 	static boolean RECURSION = true;
 	static int OPCODE = DNSClient.QUERY_STANDARD;
+	static QClass QCLASS;
+	static QType QTYPE;
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws SocketException, IOException {
@@ -39,22 +40,22 @@ public class Main {
 
 		Utils.pause();
 
-		HOTE = getHote();
+		// Get Hote
+		HOTE = UsersInteractions.getUserInputHote();
 
-		
-		
-		RecordClass cLass = new RecordClass(RecordClass.QCLASS_IN);
-		System.out.println("classval : " + cLass);
-		RecordType type = new RecordType(RecordType.QTYPE_A);
-	
+		// Get QClass
+		QCLASS = UsersInteractions.getUserInputQClass();		
+
+		// Get QType
+		QTYPE = UsersInteractions.getUserInputQType();
 
 		DNSClient client = new DNSClient(
 				InetAddress.getByAddress(SERVER_ADDRESS),
 				SERVER_PORT, 
 				RECURSION, 
 				OPCODE, 
-				cLass, 
-				type, 
+				QCLASS, 
+				QTYPE, 
 				HOTE
 				);
 
@@ -87,18 +88,18 @@ public class Main {
 				arcount);
 
 		Question question = new Question(
-				client.getQuery(), 					// query
-				client.getType(), 					// type
-				client.getCLass());					// class
+				client.getQuery(),
+				client.getType(), 	
+				client.getCLass());
 
 
 
-		Packet dnspacket = new Packet(header, question/*, null, null,null*/);
+		Packet dnspacket = new Packet(header, question);
 		byte[] data = dnspacket.toByteArray();
 
-
 		DatagramSocket socket = new DatagramSocket();
-		DatagramPacket packet = new DatagramPacket (data, 
+		DatagramPacket packet = new DatagramPacket (
+				data, 
 				data.length, 
 				InetAddress.getByAddress(SERVER_ADDRESS), 
 				SERVER_PORT);
@@ -113,15 +114,7 @@ public class Main {
 		byte[] arr = packet.getData();
 		Packet response = new Packet(arr);
 
-
 		System.out.println(response);
-	}
-
-	@SuppressWarnings("resource")
-	private static String getHote() throws IOException {
-        System.out.println("Please enter an hote address (like <google.fr>):");
-        Scanner in = new Scanner(System.in);
-        return in.next();
 	}
 
 }

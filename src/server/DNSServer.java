@@ -27,17 +27,11 @@ public class DNSServer {
                     server.receive(p);
                     Packet pac = new Packet(p.getData());
                     if (domaines.containsKey(pac.getQuestion().getQName())) {
-                        System.out.println("totototootot");
-                        // Je garde le packet,
-                        // Je set le answer avec les records dedans.
-                        // ???
                         pac.setAnswer(new Answer(domaines.get(pac.getQuestion().getQName())));
-                        byte[] data = pac.toByteArray();
-                        DatagramPacket packet = new DatagramPacket(data, data.length);
                         // Retourne la response
                         InetAddress address = p.getAddress();
                         int port = p.getPort();
-                        DatagramPacket dnsPacket = new DatagramPacket(packet.getData(), packet.getData().length, address, port);
+                        DatagramPacket dnsPacket = new DatagramPacket(pac.toByteArray(), pac.toByteArray().length, address, port);
                         server.send(dnsPacket);
                     }
                     else {

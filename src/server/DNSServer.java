@@ -1,9 +1,6 @@
 package server;
 
 
-import interfaces.IServer;
-
-import java.awt.ItemSelectable;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,15 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class DNSServer implements IServer{
+public class DNSServer {
 
 	private Map<String, Map<String, String>> domains;
 	
-	public static void main(String[] args) {
-		// TODO Server
+	public DNSServer() {
+        handleConfig();
+		run();
 	}
 
-	@Override
+    public void handleConfig() {
+        // TODO définir les domaines .avec le config
+        domains = new HashMap<String, Map<String,String>>();
+        // TODO:
+    }
+
 	public void run() {
 		ServerSocket server = null;
 		Socket client = null;
@@ -29,6 +32,14 @@ public class DNSServer implements IServer{
 		//TODO 
 		try {
 			server = new ServerSocket();
+            // server = new ServerSocket(Integer.parseInt(conf.get(Config.Type.worker.toString(), Config.PORT)));
+            while(true) {
+                try {
+                    client = server.accept();
+                    addJobToPool(client);
+                } catch (Exception e) {
+                }
+            }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,14 +60,8 @@ public class DNSServer implements IServer{
 		
 	}
 
-	@Override
-	public boolean init() {
-		// TODO définir les domaines .avec le config
-				domains = new HashMap<String, Map<String,String>>();
-				
-				
-				
-		return false;
-	}
+	public void addJobToPool(Socket client) {
+        //		pool.addJob(new DNSServerTask(this, client));
+    }
 
 }

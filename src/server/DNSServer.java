@@ -18,7 +18,7 @@ public class DNSServer {
         HashMap<String, Record[]> domaines = new HashMap<String, Record[]>();
         initDomaines(domaines);
         DatagramSocket server = null;
-        byte[] buf = new byte[512];
+        byte[] buf = new byte[1024];
         DatagramPacket p = new DatagramPacket(buf, buf.length);
         try {
             server = new DatagramSocket(53);
@@ -27,11 +27,12 @@ public class DNSServer {
                     server.receive(p);
                     Packet pac = new Packet(p.getData());
                     if (domaines.containsKey(pac.getQuestion().getQName())) {
-                        pac.setAnswer(new Answer(domaines.get(pac.getQuestion().getQName())));
+                        Packet responsePacket = new Packet(pac.getHeader(), pac.getQuestion(), new Answer(domaines.get(pac.getQuestion().getQName())));
+
                         // Retourne la response
                         InetAddress address = p.getAddress();
                         int port = p.getPort();
-                        DatagramPacket dnsPacket = new DatagramPacket(pac.toByteArray(), pac.toByteArray().length, address, port);
+                        DatagramPacket dnsPacket = new DatagramPacket(responsePacket.toByteArray(), responsePacket.toByteArray().length, address, port);
                         server.send(dnsPacket);
                     }
                     else {
@@ -74,9 +75,10 @@ public class DNSServer {
 
     private static void initDomaines(HashMap<String, Record[]> domaines) {
         // int ttl,  int rdlength, String rdata
-        Record[] r = {new Record("google.fr.", QType.A, QClass.IN, 256, 4, "data"), new Record("google.fr", QType.A, QClass.IN, 256, 4, "data"), new Record("google.fr", QType.A, QClass.IN, 256, 4, "data"), new Record("google.fr", QType.A, QClass.IN, 256, 4, "data")};
+        Record[] r = {new Record("google.fr.", QType.A, QClass.IN, 256, 4, "??(?"), new Record("google.fr", QType.A, QClass.IN, 256, 4, "??(?"),
+                new Record("google.fr", QType.A, QClass.IN, 256, 4, "??(?"), new Record("google.fr", QType.A, QClass.IN, 256, 4, "??(?")};
         domaines.put("google.fr.", r);
-        r = new Record[]{new Record("wehicles.com.", QType.A, QClass.IN, 3050, 4, "data")};
+        r = new Record[]{new Record("wehicles.com.", QType.A, QClass.IN, 3050, 4, "??(?")};
         domaines.put("wehicles.com.", r);
     }
 }

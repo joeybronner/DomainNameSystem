@@ -16,6 +16,13 @@ public class Packet {
 		this.setQuestion(question2);
 	}
 
+    public Packet(Header header, Question question2, Answer answer) {
+
+        this.setHeader(header);
+        this.setQuestion(question2);
+        this.setAnswer(answer);
+    }
+
 	public Packet (byte [] data) throws IOException{
 		PacketReader.getPacketReader().setData(data);
         ByteArrayInputStream bis = new ByteArrayInputStream (data);

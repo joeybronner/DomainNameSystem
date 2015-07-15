@@ -105,7 +105,7 @@ public class Main {
 				SERVER_PORT);
 
 
-		socket.setSoTimeout(5000);
+		//socket.setSoTimeout(5000);
 		socket.send(packet);
 
 

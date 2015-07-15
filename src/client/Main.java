@@ -1,13 +1,6 @@
 package client;
 
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.util.Random;
-
 import obj.Header;
 import obj.Packet;
 import obj.Question;
@@ -16,10 +9,17 @@ import utils.Utils;
 import utils.enums.QClass;
 import utils.enums.QType;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.Random;
+
 public class Main {
 
 	// DNS Public Google 
-	static byte [] SERVER_ADDRESS = {8,8,8,8}; 
+	static byte [] SERVER_ADDRESS = {127,0,0,1};
 	static int SERVER_PORT = 53;
 	static String HOTE = null;
 	static boolean RECURSION = true;

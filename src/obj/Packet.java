@@ -1,12 +1,8 @@
 package obj;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 import utils.PacketReader;
+
+import java.io.*;
 
 public class Packet {
     
@@ -19,7 +15,7 @@ public class Packet {
 		this.setHeader(header);
 		this.setQuestion(question2);
 	}
-		
+
 	public Packet (byte [] data) throws IOException{
 		PacketReader.getPacketReader().setData(data);
         ByteArrayInputStream bis = new ByteArrayInputStream (data);

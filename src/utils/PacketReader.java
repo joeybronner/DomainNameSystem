@@ -21,7 +21,7 @@ public class PacketReader {
 		this.data = data;
 	}
 	
-	public String readName(DataInputStream dis) throws IOException{
+	public String readName(DataInputStream dis) throws IOException {
 		DataInputStream diss = dis;
 		StringBuilder name = new StringBuilder();
 		int length = diss.readByte();

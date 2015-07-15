@@ -59,6 +59,7 @@ public class DNSServer {
                         int port = p.getPort();
                         packet = new DatagramPacket(packet.getData(), packet.getData().length, address, port);
                         server.send(packet);
+                        System.out.println("toto");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

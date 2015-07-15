@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class DNSServer implements x{
+public class DNSServer implements IServer{
 
 	private Map<String, Map<String, String>> domains;
 	

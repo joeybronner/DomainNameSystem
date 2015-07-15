@@ -16,7 +16,6 @@ public class Question {
 	private int QTYPE;
 	private int QCLASS;
 	
-	
 	public Question(String qname, QType qtype, QClass qclass){
         this.setQName(qname);
         this.setQType(qtype.getQType());

@@ -124,20 +124,13 @@ public class Record {
         this.setRDLength (dis.readUnsignedShort());
         byte [] data = new byte [this.getRDLength()];
         dis.readFully(data);
-        //System.out.println(data);
-        //String rdata = RecordData.getRData(this.getType(), data);
         String rdata = new String(data, StandardCharsets.UTF_8);
         this.setRData(rdata);
     }
 
     public void writeToOutputStream (DataOutputStream dos) throws IOException {
-    	//write name to the output stream
-    	//split string by "."
+  
         String [] labels = this.getName ().split ("\\.");
-        
-        //write QNAME in length/Data format.
-        //1Byte indicating length of message,
-        //follows by that many bytes of data
         for (int i = 0; i < labels.length; i++) {
             byte [] label = labels[i].getBytes ();
             int length = label.length;
@@ -149,7 +142,8 @@ public class Record {
             dos.writeByte (label.length);
             dos.write (label);
         }
-        //Terminate NAME by writing 0x00
+        
+        //Terminate NAME with 0x00
         dos.writeByte (0);
         
         //write TYPE
@@ -165,7 +159,6 @@ public class Record {
         dos.writeShort(this.getRDLength());
         
         //write RDATA
-        //dos.write(this.getRData().toByteArray());
         dos.write(this.getRData().toString().getBytes());
     }
 
